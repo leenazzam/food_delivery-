@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/appcolors.dart';
 import 'package:food/views/pages/coustom_bottom_navbar.dart';
-import 'package:food/views/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());

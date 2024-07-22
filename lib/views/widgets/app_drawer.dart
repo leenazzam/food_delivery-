@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/views/pages/home_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -13,7 +14,9 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.home),
               title: Text('Home'),
-              onTap: () {},
+              onTap: () {
+                HomePage();
+              },
             ),
           ],
         ),
