@@ -154,11 +154,21 @@ class _HomePageState extends State<HomePage> {
                             shape: BoxShape.circle,
                           ),
                           child: InkWell(
-                            onTap: () {},
-                            child: const Padding(
-                              padding: EdgeInsets.all(4),
+                            onTap: () {
+                              setState(() {
+                                if (favoritesProducts.contains(product)) {
+                                  favoritesProducts.remove(product);
+                                } else {
+                                  favoritesProducts.add(product);
+                                }
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
                               child: Icon(
-                                Icons.favorite_border,
+                                favoritesProducts.contains(product)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
                                 size: 15,
                                 color: AppColors.primary,
                               ),

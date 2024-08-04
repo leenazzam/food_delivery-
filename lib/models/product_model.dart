@@ -19,6 +19,8 @@ class ProductModel {
   });
 }
 
+List<ProductModel> favoritesProducts = [];
+
 List<ProductModel> dummyProducts = [
   ProductModel(
       id: '1',
