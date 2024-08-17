@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/models/category_model.dart';
 import 'package:food/models/product_model.dart';
 import 'package:food/utils/appcolors.dart';
+import 'package:food/views/pages/product_details_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,7 +31,9 @@ class _HomePageState extends State<HomePage> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Image.asset('assets/images/food_banner.jpg')),
+                child: Image.asset(
+                  'assets/images/food_banner.jpg',
+                )),
             const SizedBox(height: 36),
             SizedBox(
               height: 120,
@@ -107,76 +111,87 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               itemBuilder: (_, index) {
                 final product = filteredProducts[index];
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.network(
-                              product.imgUrl,
-                              height: 90,
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              product.name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 17),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              '\$${product.price}',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: AppColors.primary),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: 4,
-                        right: 4,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: AppColors.grey2,
-                            shape: BoxShape.circle,
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(CupertinoPageRoute(builder: (_) {
+                      return ProductDetailsPage(
+                        product: product,
+                      );
+                    }));
+                  },
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.network(
+                                product.imgUrl,
+                                height: 90,
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(product.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text('\$${product.price}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                      )),
+                            ],
                           ),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (favoritesProducts.contains(product)) {
-                                  favoritesProducts.remove(product);
-                                } else {
-                                  favoritesProducts.add(product);
-                                }
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(4),
-                              child: Icon(
-                                favoritesProducts.contains(product)
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                size: 15,
-                                color: AppColors.primary,
+                        ),
+                        Positioned(
+                          top: 4,
+                          right: 4,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: AppColors.grey2,
+                              shape: BoxShape.circle,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (favoritesProducts.contains(product)) {
+                                    favoritesProducts.remove(product);
+                                  } else {
+                                    favoritesProducts.add(product);
+                                  }
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Icon(
+                                  favoritesProducts.contains(product)
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  size: 15,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 );
               },

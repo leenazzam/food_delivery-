@@ -47,7 +47,7 @@ List<ProductModel> dummyProducts = [
       category: dummyCategories[2],
       name: 'Chicken Pizza',
       imgUrl:
-          'https://www.pngkey.com/png/full/70-701336_california-chicken-pizza-butter-chicken-pizza-png.png',
+          'https://upload.wikimedia.org/wikipedia/commons/3/39/Supreme_pizza.png',
       price: 9.99),
   ProductModel(
       id: '5',
@@ -61,7 +61,7 @@ List<ProductModel> dummyProducts = [
       category: dummyCategories[1],
       name: 'Lazania',
       imgUrl:
-          'https://www.pngkey.com/png/full/155-1551891_0-chicken-lasagna-pasta-png.png',
+          'https://as1.ftcdn.net/v2/jpg/07/15/33/58/1000_F_715335815_gZD01si1ryY2EVshIb8imvvg97AoXYFQ.webp',
       price: 8.99),
   ProductModel(
       id: '7',

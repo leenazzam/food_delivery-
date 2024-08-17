@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food/models/product_model.dart';
 import 'package:food/utils/appcolors.dart';
 import 'package:food/views/pages/favorite_page.dart';
 import 'package:food/views/pages/home_page.dart';
@@ -7,14 +6,14 @@ import 'package:food/views/pages/profile_page.dart';
 import 'package:food/views/widgets/app_drawer.dart';
 import 'package:food/views/widgets/custom_appbar.dart';
 
-class CoustomBottomNavbar extends StatefulWidget {
-  const CoustomBottomNavbar({super.key});
+class CustomBottomNavbar extends StatefulWidget {
+  const CustomBottomNavbar({super.key});
 
   @override
-  State<CoustomBottomNavbar> createState() => _CoustomBottomNavbarState();
+  State<CustomBottomNavbar> createState() => _CustomBottomNavbarState();
 }
 
-class _CoustomBottomNavbarState extends State<CoustomBottomNavbar> {
+class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   int selectedIndex = 0;
   List<Widget> bodyWidgets = [
     const HomePage(),

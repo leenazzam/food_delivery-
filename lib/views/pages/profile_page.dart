@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Row(children: [
                     Icon(Icons.person),
                     Text(
-                      "Personal Information",
+                      "  Personal Information",
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
