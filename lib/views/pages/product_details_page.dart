@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/models/product_model.dart';
 import 'package:food/utils/appcolors.dart';
+import 'package:food/views/pages/cart_page.dart';
 import 'package:food/views/widgets/counter_widget.dart';
 import 'package:food/views/widgets/property_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final ProductModel product;
@@ -20,33 +22,31 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       appBar: AppBar(
         backgroundColor: AppColors.grey2,
         actions: [
-          Positioned(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: AppColors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(8)),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      if (favoritesProducts.contains(widget.product)) {
-                        favoritesProducts.remove(widget.product);
-                      } else {
-                        favoritesProducts.add(widget.product);
-                      }
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Icon(
-                      favoritesProducts.contains(widget.product)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      size: 30,
-                      color: Theme.of(context).primaryColor,
-                    ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(8)),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    if (favoritesProducts.contains(widget.product)) {
+                      favoritesProducts.remove(widget.product);
+                    } else {
+                      favoritesProducts.add(widget.product);
+                    }
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Icon(
+                    favoritesProducts.contains(widget.product)
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    size: 30,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
@@ -92,9 +92,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         decoration: BoxDecoration(color: AppColors.grey2),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 60),
-                          child: Image.network(
-                            widget.product.imgUrl,
-                          ),
+                          child: CachedNetworkImage(
+                              imageUrl: widget.product.imgUrl),
                         ),
                       ),
                     ),
@@ -127,7 +126,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
-                                        .copyWith(fontWeight: FontWeight.bold),
+                                        .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
                                   ),
                                   const SizedBox(
                                     height: 5,
@@ -137,11 +138,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelLarge!
-                                        .copyWith(color: AppColors.grey),
+                                        .copyWith(
+                                          color: AppColors.grey,
+                                        ),
                                   ),
                                 ],
                               ),
-                              CounterWidget(),
+                              CounterWidget(
+                                product: widget.product,
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -195,7 +200,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '\$${widget.product.price}',
+                          '\$${widget.product.totalprice.toStringAsFixed(2)}',
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!
@@ -210,8 +215,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       child: SizedBox(
                         height: 40,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Checkout'),
+                          onPressed: () {
+                            setState(() {
+                              if (cartProducts.contains(widget.product)) {
+                                widget.product.count++;
+                              } else {
+                                cartProducts.add(widget.product);
+                              }
+                            });
+                            Navigator.of(context)
+                                .push(CupertinoPageRoute(builder: (_) {
+                              return CartPage();
+                            }));
+                          },
+                          child: Text('Add to Cart'),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               foregroundColor: AppColors.white,

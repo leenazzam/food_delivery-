@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/utils/appcolors.dart';
+import 'package:food/views/pages/cart_page.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -9,8 +11,15 @@ class CustomAppBar extends StatelessWidget {
     return AppBar(
       actions: [
         IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none_outlined)),
+            onPressed: () {
+              Navigator.of(context).push(CupertinoPageRoute(builder: (_) {
+                return CartPage();
+              }));
+            },
+            icon: const Icon(
+              Icons.shopping_cart_outlined,
+              color: AppColors.black,
+            )),
       ],
       centerTitle: true,
       title: const Center(
@@ -19,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
             const Text(
               "Current Location",
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 10,
                 color: AppColors.grey,
               ),
             ),
@@ -33,7 +42,7 @@ class CustomAppBar extends StatelessWidget {
               ),
               Text(
                 'Hebron,Palestine',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 17),
               )
             ])
           ],

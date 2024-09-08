@@ -7,6 +7,8 @@ class ProductModel {
   final String description;
   final double price;
   final CategoryModel category;
+  int count;
+  double get totalprice => price * count;
 
   ProductModel({
     required this.id,
@@ -16,8 +18,11 @@ class ProductModel {
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     required this.price,
     required this.category,
+    this.count = 1,
   });
 }
+
+List<ProductModel> cartProducts = [];
 
 List<ProductModel> favoritesProducts = [];
 

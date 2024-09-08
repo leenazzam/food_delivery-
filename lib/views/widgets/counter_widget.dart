@@ -1,29 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food/models/product_model.dart';
 import 'package:food/utils/appcolors.dart';
 
 class CounterWidget extends StatefulWidget {
-  const CounterWidget({super.key});
+  final ProductModel product;
+  const CounterWidget({super.key, required this.product});
 
   @override
   State<CounterWidget> createState() => _CounterWidgetState();
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  int _counter = 1;
+  late int counter;
+  @override
+  void initState() {
+    super.initState();
+    counter = widget.product.count;
+  }
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-          color: AppColors.white, borderRadius: BorderRadius.circular(30)),
+          border: Border.all(color: AppColors.grey2),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(30)),
       child: Row(
         children: [
           IconButton(
-              onPressed: _counter > 1
+              onPressed: counter > 1
                   ? () {
                       setState(() {
-                        _counter--;
+                        counter--;
+                        widget.product.count = counter;
                       });
                     }
                   : null,
@@ -31,14 +41,15 @@ class _CounterWidgetState extends State<CounterWidget> {
           const SizedBox(
             width: 8,
           ),
-          Text('$_counter'),
+          Text('$counter'),
           const SizedBox(
             width: 8,
           ),
           IconButton(
               onPressed: () {
                 setState(() {
-                  _counter++;
+                  counter++;
+                  widget.product.count = counter;
                 });
               },
               icon: const Icon(Icons.add)),
