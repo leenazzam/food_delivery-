@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:food/models/product_model.dart';
 import 'package:food/utils/appcolors.dart';
 import 'package:food/views/pages/cart_page.dart';
@@ -16,6 +17,10 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  void initstate() {
+    widget.product.prices = widget.product.price;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,6 +151,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               ),
                               CounterWidget(
                                 product: widget.product,
+                                onQuantityChanged: () {
+                                  setState(() {});
+                                },
                               ),
                             ],
                           ),
@@ -200,7 +208,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '\$${widget.product.totalprice.toStringAsFixed(2)}',
+                          '\$${widget.product.prices.toStringAsFixed(2)}',
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!

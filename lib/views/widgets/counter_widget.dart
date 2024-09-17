@@ -5,7 +5,9 @@ import 'package:food/utils/appcolors.dart';
 
 class CounterWidget extends StatefulWidget {
   final ProductModel product;
-  const CounterWidget({super.key, required this.product});
+  final VoidCallback onQuantityChanged;
+  const CounterWidget(
+      {super.key, required this.product, required this.onQuantityChanged});
 
   @override
   State<CounterWidget> createState() => _CounterWidgetState();
@@ -34,6 +36,10 @@ class _CounterWidgetState extends State<CounterWidget> {
                       setState(() {
                         counter--;
                         widget.product.count = counter;
+
+                        widget.product.prices -= widget.product.price;
+
+                        widget.onQuantityChanged();
                       });
                     }
                   : null,
@@ -50,6 +56,9 @@ class _CounterWidgetState extends State<CounterWidget> {
                 setState(() {
                   counter++;
                   widget.product.count = counter;
+                  widget.product.prices += widget.product.price;
+
+                  widget.onQuantityChanged();
                 });
               },
               icon: const Icon(Icons.add)),

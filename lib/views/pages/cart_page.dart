@@ -14,11 +14,13 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   late ProductModel product;
+  double cartprice = 0;
+  int cartcount = 0;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final orientation = MediaQuery.of(context).orientation;
-
     return Scaffold(
       backgroundColor: AppColors.grey100,
       appBar: AppBar(
@@ -66,6 +68,8 @@ class _CartPageState extends State<CartPage> {
                           itemCount: cartProducts.length,
                           itemBuilder: (context, index) {
                             final cartItem = cartProducts[index];
+                            cartprice += cartItem.prices;
+                            cartcount += cartItem.count;
                             product = cartItem;
                             return Padding(
                               padding: const EdgeInsets.all(4),
@@ -118,7 +122,7 @@ class _CartPageState extends State<CartPage> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${cartItem.totalprice.toStringAsFixed(2)} \$',
+                                                  '${cartItem.prices.toStringAsFixed(2)} \$',
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleSmall!
@@ -143,6 +147,9 @@ class _CartPageState extends State<CartPage> {
                                           ),
                                           CounterWidget(
                                             product: cartItem,
+                                            onQuantityChanged: () {
+                                              setState(() {});
+                                            },
                                           ),
                                         ],
                                       ),
@@ -194,7 +201,7 @@ class _CartPageState extends State<CartPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '\$---',
+                            '\$${cartprice.toStringAsFixed(1)}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -210,7 +217,7 @@ class _CartPageState extends State<CartPage> {
                           height: 40,
                           child: ElevatedButton(
                             onPressed: () {},
-                            child: Text('Checkout'),
+                            child: Text('Checkout (${cartcount.toString()})'),
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
                                 foregroundColor: AppColors.white,

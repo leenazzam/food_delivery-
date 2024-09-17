@@ -1,106 +1,99 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:food/utils/appcolors.dart';
+import 'dart:io';
 
-class ProfilePage extends StatefulWidget {
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:food/views/widgets/orders_coupons_widget.dart';
+import 'package:food/views/widgets/profile_list_tile.dart';
+
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8),
+    final size = MediaQuery.of(context).size;
+
+    return SafeArea(
+      child: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
-              Image.asset(
-                'assets/images/img.png',
-                color: AppColors.primary,
-                height: 130,
-                width: 130,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 24.0),
+              CircleAvatar(
+                  radius:
+                      size.width > 800 ? size.height * 0.2 : size.height * 0.1,
+                  backgroundImage: const AssetImage('assets/images/img.png')),
+              const SizedBox(height: 24.0),
               const Text(
-                "Leen Azzam",
+                'Leen Azzam',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              const SizedBox(height: 6.0),
+              const Text(
+                'Software Engineer',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black45,
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              const SizedBox(height: 24.0),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Row(children: [
-                    Icon(Icons.person),
-                    Text(
-                      "  Personal Information",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ]),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Row(
-                        children: [
-                          Icon(Icons.edit),
-                          Text(
-                            "Edit",
-                            style: TextStyle(),
-                          )
-                        ],
-                      ))
+                  OrdersCouponsWidget(
+                    title: 'Orders',
+                    value: 10,
+                  ),
+                  SizedBox(
+                    height: 45,
+                    child: VerticalDivider(),
+                  ),
+                  OrdersCouponsWidget(
+                    title: 'Coupons',
+                    value: 5,
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 12,
+              const Divider(
+                indent: 20,
+                endIndent: 20,
               ),
+              if (!Platform.isIOS) ...[
+                const ProfileListTile(
+                  leadingIcon: Icons.shopping_cart_outlined,
+                  title: 'Orders',
+                ),
+                const Divider(
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                const ProfileListTile(
+                  leadingIcon: Icons.card_giftcard_outlined,
+                  title: 'Coupons',
+                ),
+                const Divider(
+                  indent: 20,
+                  endIndent: 20,
+                ),
+              ] else
+                CupertinoListSection(
+                  children: const [
+                    ProfileListTile(
+                      leadingIcon: Icons.shopping_cart_outlined,
+                      title: 'Orders',
+                    ),
+                    ProfileListTile(
+                      leadingIcon: Icons.card_giftcard_outlined,
+                      title: 'Coupons',
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
       ),
     );
-    //  ListView(
-    //   physics: const BouncingScrollPhysics(),
-    //   children: const [
-    //     Icon(Icons.settings),
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //     Icon(
-    //       Icons.person,
-    //       size: 80,
-    //     ),
-    //     Text(
-    //       'Leen Azzam',
-    //       textAlign: TextAlign.center,
-    //       style: TextStyle(fontSize: 20),
-    //     ),
-    //     Text(
-    //       'leenazzamsh@gmail.com',
-    //       textAlign: TextAlign.center,
-    //       style: TextStyle(fontSize: 15, color: AppColors.primary),
-    //     ),
-    //     Padding(
-    //       padding: EdgeInsets.all(16.0),
-    //       child: Text(
-    //         'My Details',
-    //         textAlign: TextAlign.start,
-    //         style: TextStyle(fontSize: 20),
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 }

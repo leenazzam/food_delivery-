@@ -6,9 +6,10 @@ class ProductModel {
   final String name;
   final String description;
   final double price;
+  double prices;
   final CategoryModel category;
   int count;
-  double get totalprice => price * count;
+  // double get totalprice => price * count;
 
   ProductModel({
     required this.id,
@@ -19,7 +20,7 @@ class ProductModel {
     required this.price,
     required this.category,
     this.count = 1,
-  });
+  }) : prices = price;
 }
 
 List<ProductModel> cartProducts = [];
